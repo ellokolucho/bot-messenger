@@ -441,7 +441,7 @@ async function enviarMensajeConBotonSalir(senderId, text) {
   }
 }
 
-async function enviarInfoPromo(senderId, producto) {
+async function enviarProductoConBotones(senderId, producto) {
   try {
     await axios.post(`https://graph.facebook.com/v18.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
       recipient: { id: senderId },
@@ -449,31 +449,38 @@ async function enviarInfoPromo(senderId, producto) {
         attachment: {
           type: "template",
           payload: {
-            template_type: "button",
-            text: `${producto.nombre}\n${producto.descripcion}\n💰 Precio: ${producto.precio}`,
-            buttons: [
+            template_type: "generic",
+            elements: [
               {
-                type: "postback",
-                title: "🛒 Comprar ahora",
-                payload: "COMPRAR_AHORA"
-              },
-              {
-                type: "postback",
-                title: "📲 Comprar por WhatsApp",
-                payload: "COMPRAR_WHATSAPP"
-              },
-              {
-                type: "postback",
-                title: "📖 Ver otros modelos",
-                payload: "VER_OTROS_MODELOS"
+                title: producto.nombre,   // 🏷️ Nombre del producto
+                image_url: producto.imagen,  // 📸 URL de la imagen
+                subtitle: `${producto.descripcion}\n💰 Precio: ${producto.precio}`, // 📄 Descripción + Precio
+                buttons: [
+                  {
+                    type: "postback",
+                    title: "🛒 Comprar ahora",
+                    payload: "COMPRAR_AHORA"
+                  },
+                  {
+                    type: "postback",
+                    title: "📲 Comprar por WhatsApp",
+                    payload: "COMPRAR_WHATSAPP"
+                  },
+                  {
+                    type: "postback",
+                    title: "📖 Ver otros modelos",
+                    payload: "VER_OTROS_MODELOS"
+                  }
+                ]
               }
             ]
           }
         }
       }
     });
+    console.log(`✅ Producto enviado a ${senderId}`);
   } catch (error) {
-    console.error("❌ Error enviando info promo:", error.response?.data || error.message);
+    console.error("❌ Error enviando producto:", error.response?.data || error.message);
   }
 }
 
