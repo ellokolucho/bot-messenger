@@ -147,46 +147,40 @@ app.post('/webhook', async (req, res) => {
         }
       }
 
-
-      // ✅ MENSAJE DE TEXTO NORMAL (LÓGICA MEJORADA)
+      // ✅ MENSAJE DE TEXTO NORMAL
       if (webhookEvent.message && webhookEvent.message.text) {
-        reiniciarTimerInactividad(senderId); 
+        reiniciarTimerInactividad(senderId); // 🆕 Reiniciamos timers de inactividad
         const mensaje = webhookEvent.message.text.trim().toLowerCase();
 
-        // 📌 1️⃣ Primer mensaje → solo menú principal
-        if (!primerMensaje[senderId]) {
-          primerMensaje[senderId] = true;
-          enviarMenuPrincipal(senderId);
-          return;
-        }
-
-        // 📌 2️⃣ Si está en modo asesor → ChatGPT responde siempre
+        
+        // 🎯 Si el usuario está en modo asesor, enviamos la consulta a ChatGPT
         if (estadoUsuario[senderId] === 'ASESOR') {
           if (mensaje === 'salir') {
             delete estadoUsuario[senderId];
             delete memoriaConversacion[senderId];
-            delete contadorMensajesAsesor[senderId];
+            delete contadorMensajesAsesor[senderId]; // ✅ Limpiamos el contador
             enviarMensajeTexto(senderId, "🚪 Has salido del chat con asesor. Volviendo al menú principal...");
             enviarMenuPrincipal(senderId);
             return;
           }
+
           await enviarConsultaChatGPT(senderId, mensaje);
           return;
         }
 
-        // 📌 3️⃣ Respuesta automática a GRACIAS
+        // ✅ RESPUESTA A “GRACIAS”
         if (/^(gracias|muchas gracias|mil gracias|gracias!|gracias :\))$/i.test(mensaje)) {
           enviarMensajeTexto(senderId, "😄 ¡Gracias a usted! Estamos para servirle.");
           return;
         }
 
-        // 📌 4️⃣ Flujo de compra
+        // 🎯 FLUJOS DE COMPRA
         if (estadoUsuario[senderId] === 'ESPERANDO_DATOS_LIMA' || estadoUsuario[senderId] === 'ESPERANDO_DATOS_PROVINCIA') {
           manejarFlujoCompra(senderId, mensaje);
           return;
         }
 
-        // 📌 5️⃣ Disparadores de promo
+        // 🎯 DISPARADORES DE INFO
         if (mensaje.includes('me interesa este reloj exclusivo')) {
           enviarInfoPromo(senderId, promoData.reloj1);
           return;
@@ -201,22 +195,14 @@ app.post('/webhook', async (req, res) => {
           return;
         }
 
-        // 📌 6️⃣ Si NO coincide con nada → ChatGPT responde
-        await enviarConsultaChatGPT(senderId, mensaje);
+        if (mensaje.includes('hola')) {
+          enviarMenuPrincipal(senderId);
+        }
       }
-
 
       // ✅ POSTBACKS
 
-        // 🆕 ChatGPT como último recurso: solo si no se activó nada y NO es el primer mensaje
-        if (webhookEvent.message && webhookEvent.message.text) {
-            const mensaje = webhookEvent.message.text.trim().toLowerCase();
-            if (primerMensaje[senderId]) {
-                await enviarConsultaChatGPT(senderId, mensaje);
-                return;
-            } else {
-                primerMensaje[senderId] = true; // marcamos la primera interacción
-            }
+        
         }
       if (webhookEvent.postback) {
         manejarPostback(senderId, webhookEvent.postback.payload);
