@@ -152,12 +152,7 @@ app.post('/webhook', async (req, res) => {
         reiniciarTimerInactividad(senderId); // 🆕 Reiniciamos timers de inactividad
         const mensaje = webhookEvent.message.text.trim().toLowerCase();
 
-        // 📸 DETECCIÓN DE PALABRAS CLAVE PARA CATÁLOGO
-        if (mensaje.includes("catálogo") || mensaje.includes("catalogo") || mensaje.includes("ver modelos") || mensaje.includes("imágenes") || mensaje.includes("imagenes") || mensaje.includes("fotos")) {
-          await enviarMensajeTexto(senderId, "📸 ¡Claro que sí! Aquí tienes nuestro catálogo oficial de WhatsApp para ver todos los modelos:\n👉 https://wa.me/c/51904805167");
-          return;
-        }
-
+        
         // 🎯 Si el usuario está en modo asesor, enviamos la consulta a ChatGPT
         if (estadoUsuario[senderId] === 'ASESOR') {
           if (mensaje === 'salir') {
