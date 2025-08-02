@@ -441,9 +441,9 @@ async function enviarMensajeConBotonSalir(senderId, text) {
   }
 }
 
-// 🔹 ENVIAR INFO DE PROMO (igual que antes)
 async function enviarInfoPromo(senderId, producto) {
   try {
+    // 📸 Enviar la imagen del producto
     await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
       recipient: { id: senderId },
       message: {
@@ -451,21 +451,35 @@ async function enviarInfoPromo(senderId, producto) {
       }
     });
 
+    // 📄 Enviar la info del producto + botones como QUICK REPLIES (verticales)
     await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
       recipient: { id: senderId },
       message: {
         text: `${producto.nombre}\n${producto.descripcion}\n💰 Precio: S/${producto.precio}`,
         quick_replies: [
-          { content_type: "text", title: "🛍️ Comprar ahora", payload: `COMPRAR_${producto.codigo}` },
-          { content_type: "text", title: "📞 Comprar por WhatsApp", payload: `WHATSAPP_${producto.codigo}` },
-          { content_type: "text", title: "📖 Ver otros modelos", payload: "VER_MODELOS" }
+          {
+            content_type: "text",
+            title: "🛍️ Comprar ahora",
+            payload: `COMPRAR_${producto.codigo}`
+          },
+          {
+            content_type: "text",
+            title: "📞 Comprar por WhatsApp",
+            payload: `WHATSAPP_${producto.codigo}`
+          },
+          {
+            content_type: "text",
+            title: "📖 Ver otros modelos",
+            payload: "VER_MODELOS"
+          }
         ]
       }
     });
   } catch (error) {
-    console.error('❌ Error enviando info promo:', error.response?.data || error.message);
+    console.error('❌ Error enviando info promo (quick replies):', error.response?.data || error.message);
   }
 }
+
 
 // 🔹 ENVIAR MENÚ PRINCIPAL (igual que antes)
 async function enviarMenuPrincipal(senderId) {
