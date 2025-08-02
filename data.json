@@ -1,0 +1,66 @@
+{
+  "caballeros_automaticos": [
+    {
+      "codigo": "L7_Automatico Blue",
+      "nombre": "Reloj Automático de Lujo BENYAR L7 Blue",
+      "descripcion": "⌚ Diseño elegante y movimiento automático de lujo.",
+      "precio": 299,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/caballeros/automaticos/L7_Automatico%20Blue.png"
+    },
+    {
+      "codigo": "L9_Gold Automatico Pro",
+      "nombre": "Reloj AUTOMÁTICO de Lujo OLEVS Gold L9 Pro",
+      "descripcion": "✨ Estilo clásico con acabados premium.",
+      "precio": 399,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/caballeros/automaticos/L9_Gold%20Automatico%20Pro.png"
+    }
+  ],
+  "caballeros_cuarzo": [
+    {
+      "codigo": "H20_Foxbox Pro",
+      "nombre": "Reloj de Lujo Foxbox H20 Pro",
+      "descripcion": "⏳ Elegancia diaria con correa de acero inoxidable.",
+      "precio": 179,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/caballeros/cuarzo/H20_Foxbox%20Pro.png"
+    },
+    {
+      "codigo": "L33_Olevs Pro",
+      "nombre": "Reloj de Lujo OLEVS L33 RAINBOW",
+      "descripcion": "💼 Perfecto para ocasiones formales o de negocios.",
+      "precio": 169,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/caballeros/cuarzo/L33_Olevs%20Pro.png"
+    }
+  ],
+  "damas_automaticos": [
+    {
+      "codigo": "M21_Automatico",
+      "nombre": "M21- Reloj de Lujo Automático OLEVS Pro",
+      "descripcion": "🌸 Un reloj delicado con diseño premium.",
+      "precio": 299,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/damas/automaticos/M21_Automatico.png"
+    },
+    {
+      "codigo": "M8_ Automatico Pro",
+      "nombre": "Reloj Automático Forsining Damas M8 Pro",
+      "descripcion": "✨ Elegancia en tono dorado con movimiento automático.",
+      "precio": 199,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/damas/automaticos/M8_%20Automatico%20Pro.png"
+    }
+  ],
+  "damas_cuarzo": [
+    {
+      "codigo": "M10_CCJU Pro",
+      "nombre": "Reloj de lujo CRRJU M10 Pro",
+      "descripcion": "🎀 Estilo moderno para toda ocasión.",
+      "precio": 159,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/damas/cuarzo/M10_CCJU%20Pro.png"
+    },
+    {
+      "codigo": "M30_Olevs Gold",
+      "nombre": "Reloj Moderno OLEVS Gold M30 Pro",
+      "descripcion": "💖 Reloj elegante para resaltar tu look.",
+      "precio": 199,
+      "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/images/damas/cuarzo/M30_Olevs%20Gold.png"
+    }
+  ]
+}
