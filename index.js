@@ -201,9 +201,6 @@ app.post('/webhook', async (req, res) => {
       }
 
       // ✅ POSTBACKS
-
-        
-        }
       if (webhookEvent.postback) {
         manejarPostback(senderId, webhookEvent.postback.payload);
       }
