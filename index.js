@@ -468,10 +468,11 @@ async function enviarInfoPromo(senderId, producto) {
                 payload: `COMPRAR_${producto.codigo}`
               },
               {
-                type: "postback",
-                title: "📞 Comprar por WhatsApp",
-                payload: `WHATSAPP_${producto.codigo}`
-              },
+  type: "web_url",
+  url: "https://wa.me/51904805167?text=Hola%20quiero%20comprar%20este%20modelo",
+  title: "📞 Comprar por WhatsApp"
+},
+
               {
                 type: "postback",
                 title: "📖 Ver otros modelos",
