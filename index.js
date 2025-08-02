@@ -147,60 +147,68 @@ app.post('/webhook', async (req, res) => {
         }
       }
 
-      // ✅ MENSAJE DE TEXTO NORMAL
-      if (webhookEvent.message && webhookEvent.message.text) {
-        reiniciarTimerInactividad(senderId); // 🆕 Reiniciamos timers de inactividad
-        const mensaje = webhookEvent.message.text.trim().toLowerCase();
+// ✅ MENSAJE DE TEXTO NORMAL (LÓGICA CORREGIDA)
+if (webhookEvent.message && webhookEvent.message.text) {
+  reiniciarTimerInactividad(senderId); // 🆕 Reiniciamos timers de inactividad
+  const mensaje = webhookEvent.message.text.trim().toLowerCase();
 
-        
-        // 🎯 Si el usuario está en modo asesor, enviamos la consulta a ChatGPT
-        if (estadoUsuario[senderId] === 'ASESOR') {
-          if (mensaje === 'salir') {
-            delete estadoUsuario[senderId];
-            delete memoriaConversacion[senderId];
-            delete contadorMensajesAsesor[senderId]; // ✅ Limpiamos el contador
-            enviarMensajeTexto(senderId, "🚪 Has salido del chat con asesor. Volviendo al menú principal...");
-            enviarMenuPrincipal(senderId);
-            return;
-          }
+  // 🎯 Si el usuario está en modo asesor, enviamos la consulta a ChatGPT
+  if (estadoUsuario[senderId] === 'ASESOR') {
+    if (mensaje === 'salir') {
+      delete estadoUsuario[senderId];
+      delete memoriaConversacion[senderId];
+      delete contadorMensajesAsesor[senderId]; // ✅ Limpiamos el contador
+      enviarMensajeTexto(senderId, "🚪 Has salido del chat con asesor. Volviendo al menú principal...");
+      enviarMenuPrincipal(senderId);
+      return;
+    }
 
-          await enviarConsultaChatGPT(senderId, mensaje);
-          return;
-        }
+    await enviarConsultaChatGPT(senderId, mensaje);
+    return;
+  }
 
-        // ✅ RESPUESTA A “GRACIAS”
-        if (/^(gracias|muchas gracias|mil gracias|gracias!|gracias :\))$/i.test(mensaje)) {
-          enviarMensajeTexto(senderId, "😄 ¡Gracias a usted! Estamos para servirle.");
-          return;
-        }
+  // ✅ RESPUESTA A “GRACIAS”
+  if (/^(gracias|muchas gracias|mil gracias|gracias!|gracias :\))$/i.test(mensaje)) {
+    enviarMensajeTexto(senderId, "😄 ¡Gracias a usted! Estamos para servirle.");
+    return;
+  }
 
-        // 🎯 FLUJOS DE COMPRA
-        if (estadoUsuario[senderId] === 'ESPERANDO_DATOS_LIMA' || estadoUsuario[senderId] === 'ESPERANDO_DATOS_PROVINCIA') {
-          manejarFlujoCompra(senderId, mensaje);
-          return;
-        }
+  // 🎯 FLUJOS DE COMPRA
+  if (estadoUsuario[senderId] === 'ESPERANDO_DATOS_LIMA' || estadoUsuario[senderId] === 'ESPERANDO_DATOS_PROVINCIA') {
+    manejarFlujoCompra(senderId, mensaje);
+    return;
+  }
 
-        // 🎯 DISPARADORES DE INFO
-        if (mensaje.includes('me interesa este reloj exclusivo')) {
-          enviarInfoPromo(senderId, promoData.reloj1);
-          return;
-        }
-        if (mensaje.includes('me interesa este reloj de lujo')) {
-          enviarInfoPromo(senderId, promoData.reloj2);
-          return;
-        }
+  // 🎯 DISPARADORES DE INFO
+  if (mensaje.includes('me interesa este reloj exclusivo')) {
+    enviarInfoPromo(senderId, promoData.reloj1);
+    return;
+  }
+  if (mensaje.includes('me interesa este reloj de lujo')) {
+    enviarInfoPromo(senderId, promoData.reloj2);
+    return;
+  }
 
-        if (mensaje.includes('ver otros modelos')) {
-          enviarMenuPrincipal(senderId);
-          return;
-        }
+  if (mensaje.includes('ver otros modelos')) {
+    enviarMenuPrincipal(senderId);
+    return;
+  }
 
-        if (mensaje.includes('hola')) {
-          enviarMenuPrincipal(senderId);
-        }
-      }
+  if (mensaje.includes('hola')) {
+    enviarMenuPrincipal(senderId);
+    return;
+  }
 
-      // ✅ POSTBACKS
+  // ✅ Si no hay ningún trigger, ChatGPT responde (segunda interacción en adelante)
+  if (primerMensaje[senderId]) {
+    await enviarConsultaChatGPT(senderId, mensaje);
+    return;
+  } else {
+    primerMensaje[senderId] = true; // Marcamos la primera interacción
+  }
+}
+
+      // ✅ POSTBACKS}
       if (webhookEvent.postback) {
         manejarPostback(senderId, webhookEvent.postback.payload);
       }
