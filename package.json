@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "axios": "^1.11.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "node-fetch": "^2.7.0",
+    "openai": "^5.10.2"
+  },
+  "name": "bot-messenger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ellokolucho/bot-messenger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ellokolucho/bot-messenger/issues"
+  },
+  "homepage": "https://github.com/ellokolucho/bot-messenger#readme",
+  "description": ""
+}
+

@@ -1,0 +1,16 @@
+{
+  "reloj1": {
+    "codigo": "PROMO_RELOJ1",
+    "nombre": "Reloj Automático de Lujo OLEVS Gold L9 Pro",
+    "descripcion": "✨ Oferta especial – Un diseño exclusivo con acabados premium y maquinaria automática.",
+    "precio": 399,
+    "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/refs/heads/main/promo/PROMO_RELOJ1.png"
+  },
+  "reloj2": {
+    "codigo": "PROMO_RELOJ2",
+    "nombre": "Reloj de Cuarzo CRRJU Damas M10 Pro",
+    "descripcion": "🎀 Elegancia femenina en una edición limitada y sofisticada.",
+    "precio": 179,
+    "imagen": "https://raw.githubusercontent.com/ellokolucho/bot-messenger/main/promo/reloj2.png"
+  }
+}
