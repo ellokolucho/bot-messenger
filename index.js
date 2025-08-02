@@ -441,49 +441,55 @@ async function enviarMensajeConBotonSalir(senderId, text) {
   }
 }
 
-async function enviarProductoConBotones(senderId, producto) {
+// 🔹 ENVIAR INFO DE PROMO (con botones VERTICALES)
+async function enviarInfoPromo(senderId, producto) {
   try {
-    await axios.post(`https://graph.facebook.com/v18.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
+    // 1️⃣ Enviar la imagen del producto
+    await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
+      recipient: { id: senderId },
+      message: {
+        attachment: {
+          type: "image",
+          payload: { url: producto.imagen, is_reusable: true }
+        }
+      }
+    });
+
+    // 2️⃣ Enviar texto + botones en VERTICAL
+    await axios.post(`https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
       recipient: { id: senderId },
       message: {
         attachment: {
           type: "template",
           payload: {
-            template_type: "generic",
-            elements: [
+            template_type: "button",
+            text: `${producto.nombre}\n${producto.descripcion}\n💰 Precio: S/${producto.precio}`,
+            buttons: [
               {
-                title: producto.nombre,   // 🏷️ Nombre del producto
-                image_url: producto.imagen,  // 📸 URL de la imagen
-                subtitle: `${producto.descripcion}\n💰 Precio: ${producto.precio}`, // 📄 Descripción + Precio
-                buttons: [
-                  {
-                    type: "postback",
-                    title: "🛒 Comprar ahora",
-                    payload: "COMPRAR_AHORA"
-                  },
-                  {
-                    type: "postback",
-                    title: "📲 Comprar por WhatsApp",
-                    payload: "COMPRAR_WHATSAPP"
-                  },
-                  {
-                    type: "postback",
-                    title: "📖 Ver otros modelos",
-                    payload: "VER_OTROS_MODELOS"
-                  }
-                ]
+                type: "postback",
+                title: "🛍️ Comprar ahora",
+                payload: `COMPRAR_${producto.codigo}`
+              },
+              {
+                type: "postback",
+                title: "📞 Comprar por WhatsApp",
+                payload: `WHATSAPP_${producto.codigo}`
+              },
+              {
+                type: "postback",
+                title: "📖 Ver otros modelos",
+                payload: "VER_MODELOS"
               }
             ]
           }
         }
       }
     });
-    console.log(`✅ Producto enviado a ${senderId}`);
+
   } catch (error) {
-    console.error("❌ Error enviando producto:", error.response?.data || error.message);
+    console.error('❌ Error enviando info promo:', error.response?.data || error.message);
   }
 }
-
 
 // 🔹 ENVIAR MENÚ PRINCIPAL (igual que antes)
 async function enviarMenuPrincipal(senderId) {
