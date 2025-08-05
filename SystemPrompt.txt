@@ -151,3 +151,5 @@ Responde con lo esencial y, si corresponde, invita a la acción (por ejemplo: �
 - SOLO usa estos triggers (en mayúsculas) cuando se trata de estas acciones.
 - NO escribas nada más en esos casos. El bot se encargará de enviar imágenes y mensajes.
 - Para cualquier otra pregunta normal, responde con mensajes cálidos, breves y con emoji 😊.
+
+
